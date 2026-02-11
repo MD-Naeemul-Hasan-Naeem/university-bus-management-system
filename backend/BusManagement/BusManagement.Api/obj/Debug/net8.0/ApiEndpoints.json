@@ -1,0 +1,112 @@
+[
+  {
+    "ContainingType": "BusManagement.Api.Controllers.UsersController",
+    "Method": "DeleteUsers",
+    "RelativePath": "api/Users/DeleteUsers/{Id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BusManagement.Api.Controllers.UsersController",
+    "Method": "GetAllUsers",
+    "RelativePath": "api/Users/GetAllUsers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BusManagement.Api.Controllers.UsersController",
+    "Method": "GetUsersById",
+    "RelativePath": "api/Users/GetUsersById/{Id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BusManagement.Api.Controllers.UsersController",
+    "Method": "SaveUsers",
+    "RelativePath": "api/Users/SaveUsers",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "BusManagement.Api.ViewModel.UsersVM",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BusManagement.Api.Controllers.UsersInfoController",
+    "Method": "Get",
+    "RelativePath": "api/UsersInfo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BusManagement.Api.Controllers.UsersInfoController",
+    "Method": "AdminOnly",
+    "RelativePath": "api/UsersInfo/admin",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BusManagement.Api.Controllers.UsersInfoController",
+    "Method": "login",
+    "RelativePath": "api/UsersInfo/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "BusManagement.Api.ViewModel.UsersInfoVM",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BusManagement.Api.Controllers.UsersInfoController",
+    "Method": "Save",
+    "RelativePath": "api/UsersInfo/save",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "BusManagement.Api.ViewModel.UsersInfoVM",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
