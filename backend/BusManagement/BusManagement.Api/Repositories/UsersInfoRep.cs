@@ -37,35 +37,34 @@ namespace BusManagement.Api.Repositories
         }
 
 
-        public async Task<dynamic> login(UsersInfoVM model)
+        public async Task<UsersInfoVM> login(UsersInfoVM model)
         {
-            try
+            using (var connection = _context.CreateConnection())
             {
-                using (var connection = _context.CreateConnection())
-                {
-                    
+                var parameters = new DynamicParameters();
+                parameters.Add("@flag", 3);
+                parameters.Add("@Email", model.Email);
 
-                    var parameters = new DynamicParameters();
-                    parameters.Add("@flag", 3);
-                    parameters.Add("@Email", model.Email);
-                    parameters.Add("@PasswordHash", model.PasswordHash);
+                var user = await connection.QueryFirstOrDefaultAsync<UsersInfoVM>(
+                    "SP_UsersInfo",
+                    parameters,
+                    commandType: CommandType.StoredProcedure
+                );
 
-                    
+                if (user == null)
+                    return null;
 
+                // Verify password
+                var hasher = new PasswordHasher<UsersInfoVM>();
+                var result = hasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
 
-                    var data = await connection.QueryFirstOrDefaultAsync<dynamic>(
-                        "SP_UsersInfo",
-                        parameters,
-                        commandType: CommandType.StoredProcedure
-                        );
-                    return data;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                if (result == PasswordVerificationResult.Success)
+                    return user;
+
+                return null;
             }
         }
+
 
         public async Task<dynamic> Save(UsersInfoVM model)
         {

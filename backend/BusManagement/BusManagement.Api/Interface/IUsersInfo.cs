@@ -7,6 +7,6 @@ namespace BusManagement.Api.Interface
         Task<dynamic> GetAllUsersAsync();
         Task<dynamic> Save(UsersInfoVM model);
 
-        Task<dynamic> login(UsersInfoVM model);
+        Task<UsersInfoVM> login(UsersInfoVM model);
     }
 }

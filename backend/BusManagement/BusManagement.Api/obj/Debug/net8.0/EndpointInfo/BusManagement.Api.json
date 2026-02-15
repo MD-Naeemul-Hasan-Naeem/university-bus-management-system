@@ -186,7 +186,6 @@
       "UsersInfoVM": {
         "required": [
           "email",
-          "fullName",
           "password"
         ],
         "type": "object",

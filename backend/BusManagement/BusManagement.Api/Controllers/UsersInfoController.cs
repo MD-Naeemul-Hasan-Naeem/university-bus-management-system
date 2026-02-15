@@ -22,10 +22,6 @@ namespace BusManagement.Api.Controllers
     public class UsersInfoController : ControllerBase
     {
         private readonly IUsersInfo _usersInfo;
-        public UsersInfoController(IUsersInfo usersInfo)
-        {
-            _usersInfo = usersInfo;
-        }
 
         private readonly IConfiguration _config;
         public UsersInfoController(IUsersInfo usersInfo, IConfiguration config)
@@ -36,11 +32,11 @@ namespace BusManagement.Api.Controllers
 
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                var data =  _usersInfo.GetAllUsersAsync();
+                var data = await _usersInfo.GetAllUsersAsync();
                 return Ok(data);
             }
             catch (Exception ex)
@@ -84,6 +80,16 @@ namespace BusManagement.Api.Controllers
                         message = "Invalid email or password."
                     });
                 }
+
+                // ====== VERIFY PASSWORD ======
+                var passwordHasher = new PasswordHasher<UsersInfoVM>();
+                var result = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
+
+                if (result == PasswordVerificationResult.Failed)
+                {
+                    return Unauthorized(new { message = "Invalid email or password." });
+                }
+
                 // ====== JWT GENERATION ======
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -101,12 +107,17 @@ namespace BusManagement.Api.Controllers
                     expires: DateTime.Now.AddHours(2),
                     signingCredentials: creds
                 );
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
 
                 return Ok(new
                 {
                     message = "Login successful",
+                    token = tokenString,
+                    role = user.UserType,
                     data = user
                 });
+
             }
             catch (Exception ex)
             {

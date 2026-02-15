@@ -1,0 +1,31 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <h3 class="text-center mb-4">Register</h3>
+      <form #regForm="ngForm" (ngSubmit)="onSubmit(regForm)">
+        <div class="mb-3">
+          <label>Full Name</label>
+          <input type="text" name="fullName" class="form-control" [(ngModel)]="model.FullName" required>
+        </div>
+        <div class="mb-3">
+          <label>Email</label>
+          <input type="email" name="email" class="form-control" [(ngModel)]="model.Email" required>
+        </div>
+        <div class="mb-3">
+          <label>Password</label>
+          <input type="password" name="password" class="form-control" [(ngModel)]="model.Password" required>
+        </div>
+        <div class="mb-3">
+          <label>User Type</label>
+          <select name="userType" class="form-select" [(ngModel)]="model.UserType" required>
+            <option value="">Select</option>
+            <option value="Admin">Admin</option>
+            <option value="Employee">Employee</option>
+            <option value="User">User</option>
+          </select>
+        </div>
+        <button class="btn btn-success w-100" [disabled]="!regForm.form.valid">Register</button>
+      </form>
+    </div>
+  </div>
+</div>
