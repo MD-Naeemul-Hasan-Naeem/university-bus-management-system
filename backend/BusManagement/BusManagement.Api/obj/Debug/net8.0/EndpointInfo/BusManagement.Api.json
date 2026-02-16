@@ -179,6 +179,27 @@
           }
         }
       }
+    },
+    "/api/UsersInfo/generate-hash": {
+      "get": {
+        "tags": [
+          "UsersInfo"
+        ],
+        "parameters": [
+          {
+            "name": "password",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -203,10 +224,6 @@
             "nullable": true
           },
           "password": {
-            "type": "string",
-            "nullable": true
-          },
-          "userType": {
             "type": "string",
             "nullable": true
           }

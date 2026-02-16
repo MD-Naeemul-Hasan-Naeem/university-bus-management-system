@@ -76,13 +76,16 @@ namespace BusManagement.Api.Repositories
                     var hasher = new PasswordHasher<UsersInfoVM>();
                     model.PasswordHash = hasher.HashPassword(model, model.Password);
 
+                    // 🔥 Force Role
+                    var userRole = "Student";
+
                     var parameters = new DynamicParameters();
                     parameters.Add("@flag", 2);
                     parameters.Add("@Id", model.Id);
                     parameters.Add("@FullName", model.FullName);
                     parameters.Add("@Email", model.Email);
                     parameters.Add("@PasswordHash", model.PasswordHash);  // store string directly
-                    parameters.Add("@UserType", model.UserType);
+                    parameters.Add("@UserType", userRole);  // Always Student
 
                     var data = await connection.QueryFirstOrDefaultAsync<dynamic>(
                         "SP_UsersInfo",

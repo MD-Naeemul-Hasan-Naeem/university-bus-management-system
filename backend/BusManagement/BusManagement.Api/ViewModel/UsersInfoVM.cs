@@ -11,7 +11,7 @@ public class UsersInfoVM
         public required string Password { get; set; }  // Plain password from frontend
         [JsonIgnore]
         public string? PasswordHash { get; set; }  // Only used internally
-
+        [JsonIgnore]
         public string? UserType { get; set; }
     }
 }

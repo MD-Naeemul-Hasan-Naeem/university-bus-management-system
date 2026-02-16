@@ -1,31 +1,109 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-5">
-      <h3 class="text-center mb-4">Register</h3>
-      <form #regForm="ngForm" (ngSubmit)="onSubmit(regForm)">
-        <div class="mb-3">
-          <label>Full Name</label>
-          <input type="text" name="fullName" class="form-control" [(ngModel)]="model.FullName" required>
+<div class="container d-flex align-items-center justify-content-center min-vh-100 bg-light">
+  <div class="row w-100 justify-content-center">
+    <div class="col-md-5 col-lg-4">
+
+      <div class="card shadow-lg border-0 rounded-4">
+
+        <!-- Header -->
+        <div class="card-header text-center rounded-top-4"
+             style="background: linear-gradient(135deg, #28a745, #ffc107);">
+          <h4 class="text-white fw-bold mb-0">
+            <i class="bi bi-person-circle me-2"></i> Student Registration
+          </h4>
         </div>
-        <div class="mb-3">
-          <label>Email</label>
-          <input type="email" name="email" class="form-control" [(ngModel)]="model.Email" required>
+
+        <!-- Body -->
+        <div class="card-body p-4">
+
+          <form #regForm="ngForm" (ngSubmit)="onSubmit(regForm)">
+
+            <!-- Full Name -->
+            <div class="mb-3">
+              <label class="form-label fw-semibold text-success">Full Name</label>
+              <input 
+                type="text"
+                name="FullName"
+                class="form-control rounded-3"
+                [(ngModel)]="model.FullName"
+                #fullName="ngModel"
+                required>
+
+              <div *ngIf="fullName.invalid && fullName.touched" class="text-danger small mt-1">
+                Full Name is required
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label class="form-label fw-semibold text-success">Email Address</label>
+              <input 
+                type="email"
+                name="Email"
+                class="form-control rounded-3"
+                [(ngModel)]="model.Email"
+                #email="ngModel"
+                required
+                email>
+
+              <div *ngIf="email.invalid && email.touched" class="text-danger small mt-1">
+                Please enter a valid email address
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+              <label class="form-label fw-semibold text-success">Password</label>
+              <input 
+                type="password"
+                name="Password"
+                class="form-control rounded-3"
+                [(ngModel)]="model.Password"
+                #password="ngModel"
+                required
+                minlength="6">
+
+              <div *ngIf="password.invalid && password.touched" class="text-danger small mt-1">
+                Password must be at least 6 characters
+              </div>
+            </div>
+
+            <!-- Register Button -->
+            <div class="d-grid mb-3">
+              <button 
+                type="submit"
+                class="btn rounded-3 fw-semibold text-white"
+                [disabled]="!regForm.form.valid"
+                style="background-color:#dc3545;">
+                Register as Student
+              </button>
+            </div>
+
+            <!-- Divider -->
+            <div class="text-center mb-2">
+              <small class="text-muted">Already have an account?</small>
+            </div>
+
+            <!-- Login Link -->
+            <div class="d-grid">
+              <a routerLink="/login" 
+                 class="btn btn-outline-success rounded-3 fw-semibold">
+                Login here
+              </a>
+            </div>
+
+          </form>
+
         </div>
-        <div class="mb-3">
-          <label>Password</label>
-          <input type="password" name="password" class="form-control" [(ngModel)]="model.Password" required>
+
+        <!-- Footer -->
+        <div class="card-footer text-center bg-light rounded-bottom-4">
+          <small class="text-muted">
+            © 2026 University Bus Management System
+          </small>
         </div>
-        <div class="mb-3">
-          <label>User Type</label>
-          <select name="userType" class="form-select" [(ngModel)]="model.UserType" required>
-            <option value="">Select</option>
-            <option value="Admin">Admin</option>
-            <option value="Employee">Employee</option>
-            <option value="User">User</option>
-          </select>
-        </div>
-        <button class="btn btn-success w-100" [disabled]="!regForm.form.valid">Register</button>
-      </form>
+
+      </div>
+
     </div>
   </div>
 </div>

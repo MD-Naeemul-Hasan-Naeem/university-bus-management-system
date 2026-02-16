@@ -79,6 +79,22 @@
   },
   {
     "ContainingType": "BusManagement.Api.Controllers.UsersInfoController",
+    "Method": "GenerateHash",
+    "RelativePath": "api/UsersInfo/generate-hash",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "password",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BusManagement.Api.Controllers.UsersInfoController",
     "Method": "login",
     "RelativePath": "api/UsersInfo/login",
     "HttpMethod": "POST",

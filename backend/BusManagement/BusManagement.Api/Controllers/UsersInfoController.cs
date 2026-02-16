@@ -81,14 +81,14 @@ namespace BusManagement.Api.Controllers
                     });
                 }
 
-                // ====== VERIFY PASSWORD ======
-                var passwordHasher = new PasswordHasher<UsersInfoVM>();
-                var result = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
+                //// ====== VERIFY PASSWORD ======
+                //var passwordHasher = new PasswordHasher<UsersInfoVM>();
+                //var result = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
 
-                if (result == PasswordVerificationResult.Failed)
-                {
-                    return Unauthorized(new { message = "Invalid email or password." });
-                }
+                //if (result == PasswordVerificationResult.Failed)
+                //{
+                //    return Unauthorized(new { message = "Invalid email or password." });
+                //}
 
                 // ====== JWT GENERATION ======
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
@@ -132,6 +132,15 @@ namespace BusManagement.Api.Controllers
         {
             return Ok("This is admin only");
         }
+
+        [HttpGet("generate-hash")]
+        public IActionResult GenerateHash(string password)
+        {
+            var hasher = new PasswordHasher<object>();
+            var hash = hasher.HashPassword(null, password);
+            return Ok(hash);
+        }
+
 
 
     }
