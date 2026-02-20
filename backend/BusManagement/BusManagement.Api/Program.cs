@@ -58,6 +58,7 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<IUsers, UsersRep>();
 builder.Services.AddScoped<IUsersInfo, UsersInfoRep>();
+builder.Services.AddScoped<IAdminService, AdminServiceRep>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

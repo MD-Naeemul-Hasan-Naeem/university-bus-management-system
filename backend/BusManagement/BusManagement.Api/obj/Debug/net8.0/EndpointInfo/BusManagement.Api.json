@@ -5,6 +5,18 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Admin/dashboard": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Users/GetAllUsers": {
       "get": {
         "tags": [
@@ -172,27 +184,6 @@
       "get": {
         "tags": [
           "UsersInfo"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/UsersInfo/generate-hash": {
-      "get": {
-        "tags": [
-          "UsersInfo"
-        ],
-        "parameters": [
-          {
-            "name": "password",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {

@@ -14,7 +14,7 @@ namespace BusManagement.Api.Repositories
             _context = context;
         }
 
-        public async Task<dynamic> DeleteUsers(int Id)
+        public async Task<int> DeleteUsers(int Id)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace BusManagement.Api.Repositories
             }
         }
 
-        public async Task<dynamic> GetAllUsersAsync()
+        public async Task<IEnumerable<UsersVM>> GetAllUsersAsync()
         {
             try
             {
@@ -45,7 +45,7 @@ namespace BusManagement.Api.Repositories
                 {
                     var parameters = new DynamicParameters();
                     parameters.Add("@flag", 1);
-                    var data = await connection.QueryAsync<dynamic>(
+                    var data = await connection.QueryAsync<UsersVM>(
                         "SP_Users",
                         parameters,
                         commandType: CommandType.StoredProcedure
@@ -59,7 +59,7 @@ namespace BusManagement.Api.Repositories
             }
         }
 
-        public async Task<dynamic> GetUsersById(int Id)
+        public async Task<UsersVM?> GetUsersById(int Id)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace BusManagement.Api.Repositories
                 parameters.Add("@Id", Id);
                 using (var connection = _context.CreateConnection())
                 {
-                    var data = await connection.QueryFirstOrDefaultAsync(
+                    var data = await connection.QueryFirstOrDefaultAsync<UsersVM>(
                         "SP_Users",
                         parameters,
                         commandType: CommandType.StoredProcedure
@@ -82,25 +82,22 @@ namespace BusManagement.Api.Repositories
             }
         }
 
-        public async Task<dynamic> SaveUsers(UsersVM model)
+        public async Task<int> SaveUsers(UsersVM model)
         {
             try
             {
+                using var connection = _context.CreateConnection();
                 var parameters = new DynamicParameters();
                 parameters.Add("@flag", 2);
                 parameters.Add("@Id", model.Id);
                 parameters.Add("@Name", model.Name);
                 parameters.Add("@Email", model.Email);
                 parameters.Add("@Role", model.Role);
-                using (var connection = _context.CreateConnection())
-                {
-                    var data = connection.QueryFirstOrDefault(
-                        "SP_Users",
-                        parameters,
-                        commandType: CommandType.StoredProcedure
-                        );
-                    return data;
-                }
+                return await connection.ExecuteAsync(
+                     "SP_Users",
+                     parameters,
+                     commandType: CommandType.StoredProcedure
+                    );
             }
             catch (Exception ex)
             {

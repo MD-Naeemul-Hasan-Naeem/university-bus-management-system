@@ -1,7 +1,10 @@
 ﻿using BusManagement.Api.Interface;
 using BusManagement.Api.ViewModel;
+using Dapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Linq.Expressions;
 
 namespace BusManagement.Api.Controllers
@@ -46,15 +49,12 @@ namespace BusManagement.Api.Controllers
         [HttpPost("SaveUsers")]
         public async Task<IActionResult> SaveUsers([FromBody] UsersVM model)
         {
-            try
-            {
-                var data = await _users.SaveUsers(model);
-                return Ok(data);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            int result = await _users.SaveUsers(model);
+
+            if (result > 0)
+                return Ok("User saved successfully");
+
+            return BadRequest("Operation failed");
         }
         [HttpGet("GetUsersById/{Id}")]
         public async Task<IActionResult> GetUsersById(int Id)
@@ -62,6 +62,9 @@ namespace BusManagement.Api.Controllers
             try
             {
                 var data = await _users.GetUsersById(Id);
+                if (data == null)
+                    return NotFound("User not found");
+
                 return Ok(data);
             }
             catch (Exception ex)

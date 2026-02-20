@@ -1,5 +1,15 @@
 [
   {
+    "ContainingType": "BusManagement.Api.Controllers.AdminController",
+    "Method": "GetDashboard",
+    "RelativePath": "api/Admin/dashboard",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "BusManagement.Api.Controllers.UsersController",
     "Method": "DeleteUsers",
     "RelativePath": "api/Users/DeleteUsers/{Id}",
@@ -75,22 +85,6 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "BusManagement.Api.Controllers.UsersInfoController",
-    "Method": "GenerateHash",
-    "RelativePath": "api/UsersInfo/generate-hash",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "password",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
     "ReturnTypes": []
   },
   {

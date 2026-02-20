@@ -133,13 +133,13 @@ namespace BusManagement.Api.Controllers
             return Ok("This is admin only");
         }
 
-        [HttpGet("generate-hash")]
-        public IActionResult GenerateHash(string password)
-        {
-            var hasher = new PasswordHasher<object>();
-            var hash = hasher.HashPassword(null, password);
-            return Ok(hash);
-        }
+        //[HttpGet("generate-hash")]
+        //public IActionResult GenerateHash(string password)
+        //{
+        //    var hasher = new PasswordHasher<object>();
+        //    var hash = hasher.HashPassword(null, password);
+        //    return Ok(hash);
+        //}
 
 
 
