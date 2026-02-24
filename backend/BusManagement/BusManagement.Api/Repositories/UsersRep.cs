@@ -14,95 +14,72 @@ namespace BusManagement.Api.Repositories
             _context = context;
         }
 
-        public async Task<int> DeleteUsers(int Id)
+        public async Task<int> CreateProfileAsync(
+        UsersVM model,
+        IDbConnection connection,
+        IDbTransaction transaction)
         {
-            try
-            {
-                var parameters = new DynamicParameters();
-                parameters.Add("@flag", 3);
-                parameters.Add("@Id", Id);
-                using (var connection = _context.CreateConnection())
-                {
-                    var data = await connection.ExecuteAsync(
-                        "SP_Users",
-                        parameters,
-                        commandType: CommandType.StoredProcedure
-                        );
-                    return data;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            var parameters = new DynamicParameters();
+            parameters.Add("@flag", 3); // INSERT
+            parameters.Add("@UserInfoId", model.UserInfoId);
+            parameters.Add("@FullName", model.FullName);
+            parameters.Add("@Phone", model.Phone);
+            parameters.Add("@Department", model.Department);
+            parameters.Add("@StudentId", model.StudentId);
+            parameters.Add("@EmployeeId", model.EmployeeId);
+
+            return await connection.ExecuteScalarAsync<int>(
+                "SP_Users",
+                parameters,
+                transaction,
+                commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IEnumerable<UsersVM>> GetAllUsersAsync()
+        public async Task<int> UpdateProfileAsync(UsersVM model)
         {
-            try
-            {
-                using (var connection = _context.CreateConnection())
-                {
-                    var parameters = new DynamicParameters();
-                    parameters.Add("@flag", 1);
-                    var data = await connection.QueryAsync<UsersVM>(
-                        "SP_Users",
-                        parameters,
-                        commandType: CommandType.StoredProcedure
-                        );
-                    return data;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            using var connection = _context.CreateConnection();
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@flag", 4);
+            parameters.Add("@Id", model.Id);
+            parameters.Add("@FullName", model.FullName);
+            parameters.Add("@Phone", model.Phone);
+            parameters.Add("@Department", model.Department);
+            parameters.Add("@StudentId", model.StudentId);
+            parameters.Add("@EmployeeId", model.EmployeeId);
+
+            return await connection.ExecuteAsync(
+                "SP_Users",
+                parameters,
+                commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<UsersVM?> GetUsersById(int Id)
+        public async Task<int> DeleteProfileAsync(int id)
         {
-            try
-            {
-                var parameters = new DynamicParameters();
-                parameters.Add("@flag", 4);
-                parameters.Add("@Id", Id);
-                using (var connection = _context.CreateConnection())
-                {
-                    var data = await connection.QueryFirstOrDefaultAsync<UsersVM>(
-                        "SP_Users",
-                        parameters,
-                        commandType: CommandType.StoredProcedure
-                        );
-                    return data;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            using var connection = _context.CreateConnection();
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@flag", 5);
+            parameters.Add("@Id", id);
+
+            return await connection.ExecuteAsync(
+                "SP_Users",
+                parameters,
+                commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<int> SaveUsers(UsersVM model)
+        public async Task<UsersVM?> GetProfileByUserInfoIdAsync(int userInfoId)
         {
-            try
-            {
-                using var connection = _context.CreateConnection();
-                var parameters = new DynamicParameters();
-                parameters.Add("@flag", 2);
-                parameters.Add("@Id", model.Id);
-                parameters.Add("@Name", model.Name);
-                parameters.Add("@Email", model.Email);
-                parameters.Add("@Role", model.Role);
-                return await connection.ExecuteAsync(
-                     "SP_Users",
-                     parameters,
-                     commandType: CommandType.StoredProcedure
-                    );
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            using var connection = _context.CreateConnection();
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@flag", 2);
+            parameters.Add("@UserInfoId", userInfoId);
+
+            return await connection.QueryFirstOrDefaultAsync<UsersVM>(
+                "SP_Users",
+                parameters,
+                commandType: CommandType.StoredProcedure);
         }
     }
 }

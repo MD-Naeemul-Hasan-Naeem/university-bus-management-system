@@ -19,58 +19,40 @@ namespace BusManagement.Api.Controllers
             _users = users;
         }
 
-        [HttpGet("GetAllUsers")]
-        public async Task<IActionResult> GetAllUsers()
+        // 🔹 GET PROFILE BY USERINFOID
+        [HttpGet("profile/{userInfoId}")]
+        public async Task<IActionResult> GetProfile(int userInfoId)
         {
-            try
-            {
-                var data = await _users.GetAllUsersAsync();
-                return Ok(data);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            var data = await _users.GetProfileByUserInfoIdAsync(userInfoId);
+
+            if (data == null)
+                return NotFound("Profile not found");
+
+            return Ok(data);
         }
 
-        [HttpDelete("DeleteUsers/{Id}")]
-        public async Task<IActionResult> DeleteUsers(int Id)
+        //// 🔹 CREATE PROFILE
+        //[HttpPost]
+        //public async Task<IActionResult> CreateProfile(UsersVM model)
+        //{
+        //    await _users.CreateProfileAsync(model);
+        //    return Ok("Profile created successfully");
+        //}
+
+        // 🔹 UPDATE PROFILE
+        [HttpPut]
+        public async Task<IActionResult> UpdateProfile(UsersVM model)
         {
-            try
-            {
-                var data = await _users.DeleteUsers(Id);
-                return Ok(data);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            await _users.UpdateProfileAsync(model);
+            return Ok("Profile updated successfully");
         }
-        [HttpPost("SaveUsers")]
-        public async Task<IActionResult> SaveUsers([FromBody] UsersVM model)
+
+        // 🔹 DELETE PROFILE
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProfile(int id)
         {
-            int result = await _users.SaveUsers(model);
-
-            if (result > 0)
-                return Ok("User saved successfully");
-
-            return BadRequest("Operation failed");
-        }
-        [HttpGet("GetUsersById/{Id}")]
-        public async Task<IActionResult> GetUsersById(int Id)
-        {
-            try
-            {
-                var data = await _users.GetUsersById(Id);
-                if (data == null)
-                    return NotFound("User not found");
-
-                return Ok(data);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            await _users.DeleteProfileAsync(id);
+            return Ok("Profile deleted successfully");
         }
     }
 }

@@ -1,41 +1,54 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth';
 import { Router, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ CommonModule,FormsModule,
-    HttpClientModule, RouterModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule
+  ],
   templateUrl: './login.html'
-
 })
 export class LoginComponent {
-  model = { Email: '', Password: '' };
 
-  constructor(private auth: AuthService, private router: Router) {}
+  model = {
+  email: '',
+  password: ''
+};
+
+  constructor(
+    private auth: AuthService,
+    private router: Router
+  ) {}
 
   onSubmit(form: NgForm) {
-    if (form.valid) {
-      this.auth.login(this.model).subscribe({
-        next: (res: any) => {
-          alert(res.message);
-          this.auth.saveToken(res.token);
-          localStorage.setItem('role', res.role);
 
-          // Redirect based on role
-          if (res.role === 'Admin') this.router.navigate(['/admin']);
-          else if (res.role === 'Employee') this.router.navigate(['/employee']);
-          else this.router.navigate(['/user']);
-        },
-        error: (err) => {
-          alert(err.error.message || 'Login failed');
+    if (!form.valid) return;
+
+    this.auth.login(this.model).subscribe({
+      next: () => {
+
+        const role = this.auth.getRole();
+
+        if (role === 'Admin') {
+          this.router.navigate(['/admin']);
         }
-      });
-    }
+        else if (role === 'Employee') {
+          this.router.navigate(['/employee']);
+        }
+        else {
+          this.router.navigate(['/user']);
+        }
+
+      },
+      error: (err) => {
+        alert(err.error?.message || 'Login failed');
+      }
+    });
   }
 }

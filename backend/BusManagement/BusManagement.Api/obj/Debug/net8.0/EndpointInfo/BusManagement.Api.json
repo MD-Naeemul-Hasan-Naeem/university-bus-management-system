@@ -5,11 +5,30 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Admin/dashboard": {
-      "get": {
+    "/api/Admin/create-user": {
+      "post": {
         "tags": [
           "Admin"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminDashboardVM"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminDashboardVM"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminDashboardVM"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -17,26 +36,14 @@
         }
       }
     },
-    "/api/Users/GetAllUsers": {
+    "/api/Users/profile/{userInfoId}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Users/DeleteUsers/{Id}": {
-      "delete": {
         "tags": [
           "Users"
         ],
         "parameters": [
           {
-            "name": "Id",
+            "name": "userInfoId",
             "in": "path",
             "required": true,
             "schema": {
@@ -52,8 +59,8 @@
         }
       }
     },
-    "/api/Users/SaveUsers": {
-      "post": {
+    "/api/Users": {
+      "put": {
         "tags": [
           "Users"
         ],
@@ -83,14 +90,14 @@
         }
       }
     },
-    "/api/Users/GetUsersById/{Id}": {
-      "get": {
+    "/api/Users/{id}": {
+      "delete": {
         "tags": [
           "Users"
         ],
         "parameters": [
           {
-            "name": "Id",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -118,26 +125,165 @@
         }
       }
     },
-    "/api/UsersInfo/save": {
-      "post": {
+    "/api/UsersInfo/{id}": {
+      "get": {
         "tags": [
           "UsersInfo"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "UsersInfo"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/UsersInfo/update-role/{id}": {
+      "put": {
+        "tags": [
+          "UsersInfo"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UsersInfoVM"
+                "type": "string"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UsersInfoVM"
+                "type": "string"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UsersInfoVM"
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/UsersInfo/lock-unlock/{id}": {
+      "put": {
+        "tags": [
+          "UsersInfo"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/UsersInfo/reset-password/{id}": {
+      "put": {
+        "tags": [
+          "UsersInfo"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
               }
             }
           }
@@ -158,17 +304,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UsersInfoVM"
+                "$ref": "#/components/schemas/LoginVM"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/UsersInfoVM"
+                "$ref": "#/components/schemas/LoginVM"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/UsersInfoVM"
+                "$ref": "#/components/schemas/LoginVM"
               }
             }
           }
@@ -180,11 +326,30 @@
         }
       }
     },
-    "/api/UsersInfo/admin": {
-      "get": {
+    "/api/UsersInfo/register": {
+      "post": {
         "tags": [
           "UsersInfo"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterVM"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterVM"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterVM"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -195,21 +360,47 @@
   },
   "components": {
     "schemas": {
-      "UsersInfoVM": {
-        "required": [
-          "email",
-          "password"
-        ],
+      "AdminDashboardVM": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "fullName": {
+          "email": {
             "type": "string",
             "nullable": true
           },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "department": {
+            "type": "string",
+            "nullable": true
+          },
+          "studentId": {
+            "type": "string",
+            "nullable": true
+          },
+          "employeeId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginVM": {
+        "type": "object",
+        "properties": {
           "email": {
             "type": "string",
             "nullable": true
@@ -221,19 +412,16 @@
         },
         "additionalProperties": false
       },
-      "UsersVM": {
+      "RegisterVM": {
         "required": [
           "email",
-          "name",
-          "role"
+          "fullName",
+          "password",
+          "phone"
         ],
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
+          "fullName": {
             "type": "string",
             "nullable": true
           },
@@ -241,7 +429,49 @@
             "type": "string",
             "nullable": true
           },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
           "role": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UsersVM": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userInfoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "department": {
+            "type": "string",
+            "nullable": true
+          },
+          "studentId": {
+            "type": "string",
+            "nullable": true
+          },
+          "employeeId": {
             "type": "string",
             "nullable": true
           }

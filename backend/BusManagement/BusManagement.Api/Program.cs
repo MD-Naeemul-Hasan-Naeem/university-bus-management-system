@@ -1,9 +1,10 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using BusManagement.Api.DataContext;
+using BusManagement.Api.Helpers;
 using BusManagement.Api.Interface;
 using BusManagement.Api.Repositories;
-using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 
 
@@ -29,7 +30,7 @@ builder.Services.AddCors(options =>
 // ======== ADD JWT AUTHENTICATION ========
 
 
-var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 
 builder.Services.AddAuthentication(options =>
 {
@@ -38,24 +39,23 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
-    options.RequireHttpsMetadata = true;
-    options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(key)
+        ValidIssuer = jwtSettings["Issuer"],
+        ValidAudience = jwtSettings["Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(jwtSettings["Key"]!))
     };
 });
 builder.Services.AddAuthorization();
 
 // ======== END JWT CONFIG ========
 
-
+builder.Services.AddScoped<JwtHelper>();
 builder.Services.AddScoped<IUsers, UsersRep>();
 builder.Services.AddScoped<IUsersInfo, UsersInfoRep>();
 builder.Services.AddScoped<IAdminService, AdminServiceRep>();

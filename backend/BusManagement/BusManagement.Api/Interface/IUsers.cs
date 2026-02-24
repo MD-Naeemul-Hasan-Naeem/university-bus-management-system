@@ -1,12 +1,13 @@
 ﻿using BusManagement.Api.ViewModel;
+using System.Data;
 
 namespace BusManagement.Api.Interface
 {
     public interface IUsers
     {
-        Task<IEnumerable<UsersVM>> GetAllUsersAsync();
-        Task<UsersVM?> GetUsersById(int Id);
-        Task<int> SaveUsers(UsersVM model);
-        Task<int> DeleteUsers(int Id);
+        Task<int> CreateProfileAsync(UsersVM model, IDbConnection connection, IDbTransaction transaction);
+        Task<int> UpdateProfileAsync(UsersVM model);
+        Task<int> DeleteProfileAsync(int id);
+        Task<UsersVM?> GetProfileByUserInfoIdAsync(int userInfoId);
     }
 }
