@@ -5,6 +5,7 @@ import { LoginComponent } from './app/features/auth/login/login';
 import { RegisterComponent } from './app/features/auth/register/register';
 import { HttpClientModule } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
+import { AdminDashboardComponent } from './app/admin/admin-dashboard/admin-dashboard';
 
 bootstrapApplication(App, {
   providers: [
@@ -12,6 +13,7 @@ bootstrapApplication(App, {
     provideRouter([
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
+      {path: 'admin-dashboard',component: AdminDashboardComponent },
       { path: '**', redirectTo: 'login' }
     ])
   ]

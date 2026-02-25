@@ -115,75 +115,98 @@ namespace BusManagement.Api.Controllers
         }
 
         //JwtLogin
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginVM model)
         {
-            var user = await _usersInfo.GetByEmailAsync(model.Email!);
+            if (string.IsNullOrWhiteSpace(model.Email) || string.IsNullOrWhiteSpace(model.Password))
+                return BadRequest("Email and password are required");
 
+            // ✅ Trim inputs
+            var email = model.Email.Trim();
+            var password = model.Password.Trim();
+
+            // ✅ Get user by email
+            var user = await _usersInfo.GetByEmailAsync(email);
             if (user == null)
-                return Unauthorized("Invalid email");
+                return Unauthorized("Invalid email or password");
 
-            var hashed = HashPassword(model.Password!);
+            // ✅ Hash password using same function
+            var hashedPassword = HashPassword(password);
 
-            if (user.PasswordHash != hashed)
-                return Unauthorized("Invalid password");
-
+            if (user.PasswordHash != hashedPassword)
+                return Unauthorized("Invalid email or password");
 
             if (!user.IsActive)
                 return Unauthorized("Account disabled");
             if (user.IsLocked)
                 return Unauthorized("Account is locked");
 
+            // ✅ Generate JWT
             var token = _jwtHelper.GenerateToken(
                 user.Id,
                 user.Email,
-                user.Role);
+                user.Role
+            );
 
-            return Ok(new { Token = token, Role = user.Role });
+            return Ok(new
+            {
+                Token = token,
+                Role = user.Role
+            });
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterVM model)
         {
-            // ✅ 1️⃣ Validate model
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            // ✅ 2️⃣ Check duplicate email BEFORE transaction
-            var existingUser = await _usersInfo.GetByEmailAsync(model.Email!);
+            var email = model.Email.Trim();
+            var password = model.Password.Trim();
 
+            // ✅ Check duplicate email
+            var existingUser = await _usersInfo.GetByEmailAsync(email);
             if (existingUser != null)
                 return BadRequest(new { message = "Email already exists" });
-            using var connection = _context.CreateConnection();
-             connection.Open();
 
+            using var connection = _context.CreateConnection();
+            connection.Open();
             using var transaction = connection.BeginTransaction();
 
             try
             {
-                var passwordHash = HashPassword(model.Password!);
+                var passwordHash = HashPassword(password);
 
+                // 1️⃣ Create Auth record
                 int userInfoId = await _usersInfo.CreateAuthAsync(
                     new UsersInfoVM
                     {
-                        Email = model.Email,
+                        Email = email,
                         PasswordHash = passwordHash,
                         Role = model.Role ?? "User",
                         IsActive = true,
                         IsLocked = false
                     },
                     connection,
-                    transaction);
+                    transaction
+                );
 
+                // 2️⃣ Create Profile record
                 await _users.CreateProfileAsync(
                     new UsersVM
                     {
                         UserInfoId = userInfoId,
                         FullName = model.FullName,
-                        Phone = model.Phone
+                        Phone = model.Phone,
+                        Department = model.Department,
+                        StudentId = model.StudentId,
+                        EmployeeId = model.EmployeeId
                     },
                     connection,
-                    transaction);
+                    transaction
+                );
 
                 transaction.Commit();
 

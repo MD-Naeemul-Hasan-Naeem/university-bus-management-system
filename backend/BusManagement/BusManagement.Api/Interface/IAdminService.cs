@@ -4,6 +4,7 @@ namespace BusManagement.Api.Interface
 {
     public interface IAdminService
     {
-        Task<AdminDashboardVM> GetDashboardData();
+        Task<DashboardStatsVM> GetDashboardData();
+        Task<bool> CreateUserAsync(AdminDashboardVM model);
     }
 }

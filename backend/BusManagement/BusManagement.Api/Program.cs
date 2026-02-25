@@ -55,6 +55,7 @@ builder.Services.AddAuthorization();
 
 // ======== END JWT CONFIG ========
 
+builder.Services.AddScoped<IAdminService, AdminServiceRep>();
 builder.Services.AddScoped<JwtHelper>();
 builder.Services.AddScoped<IUsers, UsersRep>();
 builder.Services.AddScoped<IUsersInfo, UsersInfoRep>();

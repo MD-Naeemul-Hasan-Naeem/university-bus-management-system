@@ -1,4 +1,5 @@
 ﻿using BusManagement.Api.DataContext;
+using BusManagement.Api.Interface;
 using BusManagement.Api.ViewModel;
 using Dapper;
 using Microsoft.AspNetCore.Authorization;
@@ -14,68 +15,33 @@ namespace BusManagement.Api.Controllers
     public class AdminController : ControllerBase
     {
         private readonly DapperContext _context;
+        private readonly IAdminService _adminService;
 
-        public AdminController(DapperContext context)
+
+        public AdminController(DapperContext context, IAdminService adminService)
         {
             _context = context;
+            _adminService = adminService;
         }
 
-        [HttpPost("create-user")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> CreateUser([FromBody] AdminDashboardVM model)
+        [HttpPost("create-user")]
+        public async Task<IActionResult> CreateUser(AdminDashboardVM model)
         {
-            using var connection = _context.CreateConnection();
-            connection.Open();
+            var result = await _adminService.CreateUserAsync(model);
 
-            using var transaction = connection.BeginTransaction();
-
-            try
-            {
-                // 🔐 Insert Auth
-                var authParams = new DynamicParameters();
-                authParams.Add("@flag", 3);
-                authParams.Add("@Email", model.Email);
-                authParams.Add("@PasswordHash", HashPassword(model.Password));
-                authParams.Add("@Role", model.Role);
-
-                var userInfoId = await connection.ExecuteScalarAsync<int>(
-                    "SP_UsersInfo",
-                    authParams,
-                    transaction,
-                    commandType: CommandType.StoredProcedure);
-
-                // 👤 Insert Profile
-                var profileParams = new DynamicParameters();
-                profileParams.Add("@flag", 3);
-                profileParams.Add("@UserInfoId", userInfoId);
-                profileParams.Add("@Name", model.Name);
-                profileParams.Add("@Phone", model.Phone);
-                profileParams.Add("@Department", model.Department);
-                profileParams.Add("@StudentId", model.StudentId);
-                profileParams.Add("@EmployeeId", model.EmployeeId);
-
-                await connection.ExecuteAsync(
-                    "SP_Users",
-                    profileParams,
-                    transaction,
-                    commandType: CommandType.StoredProcedure);
-
-                transaction.Commit();
-
-                return Ok("User created successfully");
-            }
-            catch (Exception ex)
-            {
-                transaction.Rollback();
+            if (!result)
                 return BadRequest("Error creating user");
-            }
+
+            return Ok("User created successfully");
         }
 
-        private string HashPassword(string password)
+        [Authorize(Roles = "Admin")]
+        [HttpGet("dashboard")]
+        public async Task<IActionResult> GetDashboard()
         {
-            using var sha256 = System.Security.Cryptography.SHA256.Create();
-            var bytes = Encoding.UTF8.GetBytes(password);
-            return Convert.ToBase64String(sha256.ComputeHash(bytes));
+            var data = await _adminService.GetDashboardData();
+            return Ok(data);
         }
     }
 }

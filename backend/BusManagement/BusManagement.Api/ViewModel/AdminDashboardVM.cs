@@ -14,4 +14,11 @@
         public string? StudentId { get; set; }
         public string? EmployeeId { get; set; }
     }
+    public class DashboardStatsVM
+    {
+        public int TotalStudents { get; set; }
+        public int TotalDrivers { get; set; }
+        public int TotalBuses { get; set; }
+        public int TotalRoutes { get; set; }
+    }
 }

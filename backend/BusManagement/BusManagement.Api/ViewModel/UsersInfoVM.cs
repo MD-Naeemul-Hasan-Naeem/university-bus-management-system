@@ -27,5 +27,8 @@ public class UsersInfoVM
         public required string Phone { get; set; }
 
         public string Role { get; set; } = "User";
+        public string? Department { get; set; }    // Add this
+        public string? StudentId { get; set; }     // Add this
+        public string? EmployeeId { get; set; }
     }
 }

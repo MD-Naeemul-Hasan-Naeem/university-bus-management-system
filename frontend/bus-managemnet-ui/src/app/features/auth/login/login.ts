@@ -30,25 +30,20 @@ export class LoginComponent {
 
     if (!form.valid) return;
 
-    this.auth.login(this.model).subscribe({
-      next: () => {
-
-        const role = this.auth.getRole();
-
-        if (role === 'Admin') {
-          this.router.navigate(['/admin']);
-        }
-        else if (role === 'Employee') {
-          this.router.navigate(['/employee']);
-        }
-        else {
-          this.router.navigate(['/user']);
-        }
-
-      },
-      error: (err) => {
-        alert(err.error?.message || 'Login failed');
-      }
-    });
+    this.auth.login({
+  email: this.model.email.trim(),
+  password: this.model.password // raw
+}).subscribe({
+  next: (res: any) => {
+    localStorage.setItem('token', res.token);
+    const role = res.role;
+    if (role === 'Admin') this.router.navigate(['/admin-dashboard']);
+    else if (role === 'Employee') this.router.navigate(['/employee']);
+    else this.router.navigate(['/user']);
+  },
+  error: (err) => {
+    alert(err.error?.message || 'Login failed');
+  }
+});
   }
 }

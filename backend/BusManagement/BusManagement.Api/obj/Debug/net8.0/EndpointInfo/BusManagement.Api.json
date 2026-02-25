@@ -36,6 +36,18 @@
         }
       }
     },
+    "/api/Admin/dashboard": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Users/profile/{userInfoId}": {
       "get": {
         "tags": [
@@ -438,6 +450,18 @@
             "nullable": true
           },
           "role": {
+            "type": "string",
+            "nullable": true
+          },
+          "department": {
+            "type": "string",
+            "nullable": true
+          },
+          "studentId": {
+            "type": "string",
+            "nullable": true
+          },
+          "employeeId": {
             "type": "string",
             "nullable": true
           }

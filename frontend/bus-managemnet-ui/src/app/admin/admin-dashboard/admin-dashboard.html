@@ -1,0 +1,87 @@
+<div class="container d-flex align-items-center justify-content-center min-vh-100 bg-light">
+    <div class="row w-100 justify-content-center">
+        <div class="col-md-10 col-lg-9">
+
+            <div class="card shadow-lg border-0 rounded-4">
+
+                <!-- Header -->
+                <div class="card-header text-center rounded-top-4"
+                    style="background: linear-gradient(135deg, #007bff, #6610f2);">
+                    <h4 class="text-white fw-bold mb-0">
+                        <i class="bi bi-speedometer2 me-2"></i> Admin Dashboard
+                    </h4>
+                </div>
+
+                <!-- Body -->
+                <div class="card-body p-4">
+
+                    <!-- Stats Row 1 -->
+                    <div class="row g-4">
+
+                        <div class="col-md-4">
+                            <div class="card shadow-sm border-0 text-center p-3 rounded-3">
+                                <h6 class="text-muted">Total Users</h6>
+                                <h2 class="text-primary fw-bold">{{ stats?.totalUsers }}</h2>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card shadow-sm border-0 text-center p-3 rounded-3">
+                                <h6 class="text-muted">Total Students</h6>
+                                <h2 class="text-success fw-bold">{{ stats?.totalStudents }}</h2>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card shadow-sm border-0 text-center p-3 rounded-3">
+                                <h6 class="text-muted">Total Employees</h6>
+                                <h2 class="text-warning fw-bold">{{ stats?.totalEmployees }}</h2>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Stats Row 2 -->
+                    <div class="row g-4 mt-2">
+
+                        <div class="col-md-4">
+                            <div class="card shadow-sm border-0 text-center p-3 rounded-3">
+                                <h6 class="text-muted">Total Buses</h6>
+                                <h2 class="text-info fw-bold">{{ stats?.totalBuses }}</h2>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card shadow-sm border-0 text-center p-3 rounded-3">
+                                <h6 class="text-muted">Total Routes</h6>
+                                <h2 class="text-danger fw-bold">{{ stats?.totalRoutes }}</h2>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card shadow-sm border-0 text-center p-3 rounded-3">
+                                <h6 class="text-muted">Today's Bookings</h6>
+                                <h2 class="text-dark fw-bold">{{ stats?.todayBookings }}</h2>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <div class="card-footer text-center bg-light rounded-bottom-4">
+                    <small class="text-muted">
+                        © 2026 University Bus Management System | Admin Panel
+                    </small>
+                </div>
+                
+                <div *ngIf="loading" class="text-center mt-5">
+                    <div class="spinner-border text-primary"></div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

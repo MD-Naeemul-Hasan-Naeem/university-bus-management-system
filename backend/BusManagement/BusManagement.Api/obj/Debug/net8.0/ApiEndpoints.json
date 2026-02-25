@@ -16,6 +16,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "BusManagement.Api.Controllers.AdminController",
+    "Method": "GetDashboard",
+    "RelativePath": "api/Admin/dashboard",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "BusManagement.Api.Controllers.UsersController",
     "Method": "UpdateProfile",
     "RelativePath": "api/Users",
