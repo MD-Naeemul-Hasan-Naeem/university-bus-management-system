@@ -1,87 +1,87 @@
-<div class="container d-flex align-items-center justify-content-center min-vh-100 bg-light">
-    <div class="row w-100 justify-content-center">
-        <div class="col-md-10 col-lg-9">
+<div class="d-flex vh-100">
+  <!-- Sidebar -->
+  <nav class="bg-dark text-white p-3" style="width: 250px;">
+    <h5 class="text-center mb-4">Admin Panel</h5>
+    <ul class="nav flex-column">
 
-            <div class="card shadow-lg border-0 rounded-4">
+      <!-- NEW Dashboard Link -->
+      <li class="nav-item mb-2">
+        <a routerLink="/dashboard-home" routerLinkActive="active" class="nav-link text-white">
+          Dashboard
+        </a>
+      </li>
 
-                <!-- Header -->
-                <div class="card-header text-center rounded-top-4"
-                    style="background: linear-gradient(135deg, #007bff, #6610f2);">
-                    <h4 class="text-white fw-bold mb-0">
-                        <i class="bi bi-speedometer2 me-2"></i> Admin Dashboard
-                    </h4>
-                </div>
+      <li class="nav-item mb-2">
+        <a routerLink="users" routerLinkActive="active" class="nav-link text-white">
+          User Management
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a routerLink="buses" routerLinkActive="active" class="nav-link text-white">
+          Bus Management
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a routerLink="routes" routerLinkActive="active" class="nav-link text-white">
+          Route & Schedule
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a routerLink="bookings" routerLinkActive="active" class="nav-link text-white">
+          Attendance & Booking
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a routerLink="monitoring" routerLinkActive="active" class="nav-link text-white">
+          Real-time Monitoring
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a routerLink="notifications" routerLinkActive="active" class="nav-link text-white">
+          Notifications
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a routerLink="reports" routerLinkActive="active" class="nav-link text-white">
+          Reports & Analysis
+        </a>
+      </li>
+      <li class="nav-item mb-2">
+        <a routerLink="security" routerLinkActive="active" class="nav-link text-white">
+          System & Security
+        </a>
+      </li>
+    </ul>
+  </nav>
 
-                <!-- Body -->
-                <div class="card-body p-4">
+  <!-- Main Content -->
+  <div class="flex-grow-1 overflow-auto">
 
-                    <!-- Stats Row 1 -->
-                    <div class="row g-4">
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm px-4">
+      <a class="navbar-brand fw-bold">University Bus Management</a>
+      <ul class="navbar-nav ms-auto d-flex align-items-center">
+        <li class="nav-item me-3">
+          <i class="bi bi-bell fs-4"></i>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" (click)="$event.preventDefault()">
+            Admin
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" routerLink="profile">Profile</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
 
-                        <div class="col-md-4">
-                            <div class="card shadow-sm border-0 text-center p-3 rounded-3">
-                                <h6 class="text-muted">Total Users</h6>
-                                <h2 class="text-primary fw-bold">{{ stats?.totalUsers }}</h2>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="card shadow-sm border-0 text-center p-3 rounded-3">
-                                <h6 class="text-muted">Total Students</h6>
-                                <h2 class="text-success fw-bold">{{ stats?.totalStudents }}</h2>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="card shadow-sm border-0 text-center p-3 rounded-3">
-                                <h6 class="text-muted">Total Employees</h6>
-                                <h2 class="text-warning fw-bold">{{ stats?.totalEmployees }}</h2>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- Stats Row 2 -->
-                    <div class="row g-4 mt-2">
-
-                        <div class="col-md-4">
-                            <div class="card shadow-sm border-0 text-center p-3 rounded-3">
-                                <h6 class="text-muted">Total Buses</h6>
-                                <h2 class="text-info fw-bold">{{ stats?.totalBuses }}</h2>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="card shadow-sm border-0 text-center p-3 rounded-3">
-                                <h6 class="text-muted">Total Routes</h6>
-                                <h2 class="text-danger fw-bold">{{ stats?.totalRoutes }}</h2>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="card shadow-sm border-0 text-center p-3 rounded-3">
-                                <h6 class="text-muted">Today's Bookings</h6>
-                                <h2 class="text-dark fw-bold">{{ stats?.todayBookings }}</h2>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <!-- Footer -->
-                <div class="card-footer text-center bg-light rounded-bottom-4">
-                    <small class="text-muted">
-                        © 2026 University Bus Management System | Admin Panel
-                    </small>
-                </div>
-                
-                <div *ngIf="loading" class="text-center mt-5">
-                    <div class="spinner-border text-primary"></div>
-                </div>
-
-            </div>
-
-        </div>
+    <!-- Page Content -->
+    <div class="p-4">
+      <router-outlet></router-outlet>
     </div>
+  </div>
 </div>

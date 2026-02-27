@@ -9,13 +9,16 @@ import { Observable } from 'rxjs';
 })
 export class AdminService {
 
-  private apiUrl = environment.baseUrl + 'Admin/';
+  private apiUrl = environment.baseUrl + 'Admin/'; // <-- only once
 
   constructor(private http: HttpClient) {}
 
-  createUser(data: any) {
-    return this.http.post(`${this.apiUrl}Admin/create-user`, data);
+  // POST create user
+  createUser(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}create-user`, data);
   }
+
+  // GET dashboard stats
   getDashboardStats(): Observable<DashboardStats> {
     return this.http.get<DashboardStats>(`${this.apiUrl}dashboard`);
   }

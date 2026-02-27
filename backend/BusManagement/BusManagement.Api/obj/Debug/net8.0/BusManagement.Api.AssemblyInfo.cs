@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BusManagement.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bcd2fe3e28d1d65d9bed0638203194c5bf36f9bb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b71178407fd511812e3904f4175b429a32b9d205")]
 [assembly: System.Reflection.AssemblyProductAttribute("BusManagement.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BusManagement.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
