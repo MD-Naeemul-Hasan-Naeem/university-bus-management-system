@@ -6,6 +6,8 @@ import { LoginComponent } from './app/features/auth/login/login';
 import { RegisterComponent } from './app/features/auth/register/register';
 import { AdminDashboardComponent } from './app/admin/admin-dashboard/admin-dashboard';
 import { DashboardHomeComponent } from './app/admin/dashboard-home/dashboard-home';
+import { UserListComponent } from './app/admin/user-list/user-list';
+import { BusComponent } from './app/admin/bus/bus.component';
 
 bootstrapApplication(App, {
   providers: [
@@ -32,6 +34,8 @@ bootstrapApplication(App, {
       { path: 'register', component: RegisterComponent },
       { path: 'admin-dashboard', component: AdminDashboardComponent },
        { path: 'dashboard-home', component: DashboardHomeComponent },
+       { path: 'user-list', component: UserListComponent },
+       {path: 'bus', component: BusComponent},
       { path: '**', redirectTo: 'login' }
     ])
   ]

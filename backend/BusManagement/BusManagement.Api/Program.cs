@@ -2,6 +2,7 @@ using BusManagement.Api.DataContext;
 using BusManagement.Api.Helpers;
 using BusManagement.Api.Interface;
 using BusManagement.Api.Repositories;
+using BusManagement.Api.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -60,6 +61,7 @@ builder.Services.AddScoped<JwtHelper>();
 builder.Services.AddScoped<IUsers, UsersRep>();
 builder.Services.AddScoped<IUsersInfo, UsersInfoRep>();
 builder.Services.AddScoped<IAdminService, AdminServiceRep>();
+builder.Services.AddScoped<IBusService, BusRep>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

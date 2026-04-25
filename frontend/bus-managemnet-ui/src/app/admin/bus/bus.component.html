@@ -1,0 +1,98 @@
+<div class="container mt-4">
+
+  <div class="d-flex justify-content-between mb-3">
+    <h3>Bus Management</h3>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#busModal" (click)="openCreate()">
+      Add Bus
+    </button>
+  </div>
+
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Bus Number</th>
+        <th>Capacity</th>
+        <th>Driver</th>
+        <th>Status</th>
+        <th width="220">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bus of buses; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ bus.busNumber }}</td>
+        <td>{{ bus.capacity }}</td>
+        <td>{{ bus.driverId }}</td>
+        <td>
+          <span class="badge"
+                [ngClass]="bus.status === 'Active' ? 'bg-success' : 'bg-secondary'">
+            {{ bus.status }}
+          </span>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-warning me-1"
+                  data-bs-toggle="modal"
+                  data-bs-target="#busModal"
+                  (click)="openEdit(bus)">
+            Edit
+          </button>
+
+          <button class="btn btn-sm btn-danger me-1"
+                  (click)="delete(bus.id!)">
+            Delete
+          </button>
+
+          <button class="btn btn-sm btn-info"
+                  (click)="toggleStatus(bus)">
+            Toggle Status
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="busModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {{ isEdit ? 'Edit Bus' : 'Add Bus' }}
+        </h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <input type="text" class="form-control mb-2"
+               placeholder="Bus Number"
+               [(ngModel)]="selectedBus.busNumber">
+
+        <input type="number" class="form-control mb-2"
+               placeholder="Capacity"
+               [(ngModel)]="selectedBus.capacity">
+
+        <input type="number" class="form-control mb-2"
+               placeholder="Driver Id"
+               [(ngModel)]="selectedBus.driverId">
+
+        <select class="form-control"
+                [(ngModel)]="selectedBus.status">
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-success"
+                data-bs-dismiss="modal"
+                (click)="save()">
+          Save
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

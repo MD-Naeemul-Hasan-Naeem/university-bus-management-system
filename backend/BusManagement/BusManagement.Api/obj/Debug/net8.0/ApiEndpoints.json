@@ -26,6 +26,101 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "BusManagement.Api.Controllers.BusController",
+    "Method": "GetBusById",
+    "RelativePath": "api/Bus/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BusManagement.Api.Controllers.BusController",
+    "Method": "GetAllBuses",
+    "RelativePath": "api/Bus/all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BusManagement.Api.Controllers.BusController",
+    "Method": "CreateBus",
+    "RelativePath": "api/Bus/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "BusManagement.Api.ViewModel.BusVM",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BusManagement.Api.Controllers.BusController",
+    "Method": "DeleteBus",
+    "RelativePath": "api/Bus/delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BusManagement.Api.Controllers.BusController",
+    "Method": "ChangeStatus",
+    "RelativePath": "api/Bus/status",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "status",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BusManagement.Api.Controllers.BusController",
+    "Method": "UpdateBus",
+    "RelativePath": "api/Bus/update",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "BusManagement.Api.ViewModel.BusVM",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "BusManagement.Api.Controllers.UsersController",
     "Method": "UpdateProfile",
     "RelativePath": "api/Users",

@@ -151,7 +151,7 @@ namespace BusManagement.Api.Controllers
 
             return Ok(new
             {
-                Token = token,
+                token = token,
                 Role = user.Role
             });
         }
