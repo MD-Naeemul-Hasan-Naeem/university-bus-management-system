@@ -68,4 +68,8 @@ export class UsersService {
   register(data: any): Observable<any> {
     return this.api.post('UsersInfo/register', data);
   }
+
+  createUser(data: any) {
+  return this.api.post('UsersInfo/register', data);
+}
 }

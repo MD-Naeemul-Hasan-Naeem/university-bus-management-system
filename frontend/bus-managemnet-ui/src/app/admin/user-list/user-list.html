@@ -5,8 +5,73 @@
       <h4>User Management</h4>
     </div>
 
+    <div class="d-flex justify-content-between mb-3">
+
+  <!-- Search -->
+  <input type="text"
+         class="form-control w-50"
+         placeholder="Search by email..."
+         [(ngModel)]="searchText">
+
+  <!-- Add User Button -->
+  <button class="btn btn-primary"
+        (click)="openAddForm()">
+  + Add User
+</button>
+
+</div>
+
     <div class="card-body">
 
+      <div *ngIf="showAddForm" class="card mb-3 shadow">
+  <div class="card-header bg-primary text-white">
+    <h5>Add New User</h5>
+  </div>
+
+  <div class="card-body">
+
+    <div class="row">
+
+      <div class="col-md-4 mb-2">
+        <input type="email"
+               class="form-control"
+               placeholder="Email"
+               [(ngModel)]="newUser.email">
+      </div>
+
+      <div class="col-md-4 mb-2">
+        <input type="password"
+               class="form-control"
+               placeholder="Password"
+               [(ngModel)]="newUser.password">
+      </div>
+
+      <div class="col-md-4 mb-2">
+        <select class="form-select"
+                [(ngModel)]="newUser.role">
+          <option value="User">User</option>
+          <option value="Admin">Admin</option>
+          <option value="Driver">Driver</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="mt-3">
+      <button class="btn btn-success me-2"
+              (click)="createUser()">
+        Save
+      </button>
+
+      <button class="btn btn-secondary"
+              (click)="closeAddForm()">
+        Cancel
+      </button>
+    </div>
+
+  </div>
+</div>
+<div *ngIf="!showAddForm">
       <table class="table table-hover table-striped">
         <thead class="table-dark">
           <tr>
@@ -20,7 +85,7 @@
         </thead>
 
         <tbody>
-          <tr *ngFor="let u of users">
+          <tr *ngFor="let u of filteredUsers()">
             <td>{{u.id}}</td>
             <td>{{u.email}}</td>
 
@@ -57,6 +122,7 @@
           </tr>
         </tbody>
       </table>
+      </div>
 
     </div>
   </div>

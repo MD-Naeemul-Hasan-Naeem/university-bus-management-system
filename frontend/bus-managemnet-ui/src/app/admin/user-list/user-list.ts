@@ -13,6 +13,16 @@ export class UserListComponent implements OnInit {
 
   users: UserInfo[] = [];
 
+  showAddForm: boolean = false;
+
+  newUser: any = {
+    email: '',
+    password: '',
+    role: 'User'
+  };
+
+ 
+
   constructor(private userService: UsersService) {}
 
   ngOnInit(): void {
@@ -24,6 +34,14 @@ export class UserListComponent implements OnInit {
       this.users = res;
     });
   }
+
+   openAddForm() {
+  this.showAddForm = true;
+}
+
+closeAddForm() {
+  this.showAddForm = false;
+}
 
   deleteUser(id: number) {
     if (confirm('Are you sure?')) {
@@ -43,4 +61,39 @@ export class UserListComponent implements OnInit {
       this.loadUsers();
     });
   }
+  searchText: string = '';
+
+filteredUsers(): UserInfo[] {
+  if (!this.searchText) return this.users;
+
+  return this.users.filter(u =>
+    u.email.toLowerCase().includes(this.searchText.toLowerCase())
+  );
+}
+addUser() {
+  alert('Add User clicked (you can open modal here)');
+}
+
+createUser() {
+   const payload = {
+    ...this.newUser,
+    fullName: this.newUser.fullName || '',
+    phone: this.newUser.phone || '',
+    department: this.newUser.department || '',
+    studentId: null,
+    employeeId: null
+  };
+
+  this.userService.createUser(payload).subscribe({
+    next: () => {
+      alert('User created successfully');
+      this.closeAddForm();
+      this.loadUsers();
+    },
+    error: (err) => {
+      console.error(err);
+    }
+  });
+}
+
 }
